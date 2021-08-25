@@ -1,0 +1,13 @@
+module.exports = app =>{
+    const userController = require("../controller/user.controller.js")
+    var router = require("express").Router();
+
+    //to create the new user
+    router.post("/",userController.create);
+
+    //to login
+    router.get("/login",userController.login);
+
+
+    app.use('/api/user', router);
+}
