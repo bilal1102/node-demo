@@ -1,8 +1,9 @@
 const db = require('../models')
+const bcrypt = require('bcrypt');
 const userModel = db.user;
 
 //create and save new user
-exports.create = (req, res) =>{
+exports.create =async (req, res) =>{
 
     if(req.body.userName){
         try{
@@ -11,7 +12,8 @@ exports.create = (req, res) =>{
             let matched = password.match(pattern)
             console.log(matched)
             if(matched){
-                
+
+                req.body.password = await bcrypt.hash(password, 10);
                 userModel.create(req.body)
                 res.send('user created successfully'+ matched);
             }else{
@@ -35,9 +37,14 @@ exports.login = async (req, res) =>{
         try{
             const userName = req.query.userName;
             const password = req.query.password;
-            let data =await userModel.findOne({ where: { "userName": `${userName}` , "password": `${password}` } })
+            let data =await userModel.findOne({ where: { "userName": `${userName}` } })
             if(data){
-                res.send(data);
+               let result = await bcrypt.compare(password, data.password);
+               if(result){
+                   res.send(data)
+               }else{
+                   res.send('password does not matched!')
+               }
             }else{
                 res.send('user does not exist!')
             }
