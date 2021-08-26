@@ -12,6 +12,9 @@ module.exports = app =>{
     //to check the event details
     router.get("/eventDetails",eventController.eventDetails)
 
+    //to registrerUserInEvent
+    router.post("/registerUserInEvent",eventController.registrerUserInEvent)
+
 
     app.use('/api/user', router);
 }
