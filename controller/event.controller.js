@@ -56,17 +56,25 @@ exports.deleteEvent = (req, res) =>{
 }
 
 //get EventDetails 
-exports.eventDetails = (req, res)=>{
-    if(req.query.id){
+exports.eventDetails = async (req, res)=>{
+    if(req.query.id){       //take event id
         try {
-            eventModel.create(req.body)
-            res.send('event created successfully');
+           let eventDetails = await eventModel.findOne({where:{id:req.query.id}})
+            res.send(eventDetails);
         } catch (error) {
             console.log('error',error)
             res.status(500).send({message: "Internal Server Error!"})
         }
         
     }else{
-        res.send('fill the required fields')
+        res.send('invalid event Id')
+    }
+}
+
+//reginter User to an event
+exports.registrerUser = (req,res)=>{
+    if (req.query.id) {     //take event id
+
+        
     }
 }

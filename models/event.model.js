@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) =>{
         },
         price:{
             type: Sequelize.INTEGER
+        },
+        registeredUsers:{
+            type: Sequelize.ARRAY(Sequelize.TEXT)
         }
     });
     return Event
