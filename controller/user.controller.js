@@ -6,8 +6,18 @@ exports.create = (req, res) =>{
 
     if(req.body.userName){
         try{
-            userModel.create(req.body)
-            res.send('user created successfully');
+            var pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{6,}$/;
+            let password = req.body.password
+            let matched = password.match(pattern)
+            console.log(matched)
+            if(matched){
+                
+                userModel.create(req.body)
+                res.send('user created successfully'+ matched);
+            }else{
+                res.send('password should contain 6 digit alphanumeric and one special char')
+            }
+            
             
         }catch(error){
             console.log('error',error)

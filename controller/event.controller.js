@@ -123,11 +123,6 @@ exports.registrerUserInEvent = async (req,res)=>{
             console.log('error',error)
             res.status(500).send({message: "Internal Server Error!"})
         }
-
-
-
-        
-
         
     }else{
         res.send('fill the required fields')
